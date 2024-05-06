@@ -25,13 +25,13 @@ type HandlerWrapper<T extends Json = Json> = {
 
 export default class EventListener {
   private handlerWrappers: HandlerWrapper[] = [];
-  private seperator: string;
-  private keyValueSeperator: string;
+  private separator: string;
+  private keyValueSeparator: string;
   private split: Split;
-  constructor(seperator: string, keyValueSeperator: string) {
-    this.seperator = seperator;
-    this.keyValueSeperator = keyValueSeperator;
-    const { split } = joinAndSplit(seperator);
+  constructor(separator: string, keyValueSeparator: string) {
+    this.separator = separator;
+    this.keyValueSeparator = keyValueSeparator;
+    const { split } = joinAndSplit(separator);
     this.split = split;
   }
 
@@ -68,7 +68,7 @@ export default class EventListener {
   };
 
   exec = (layerKey: string, newRoot: JsonObject) => {
-    const layeredKeys = normalizeLayeredKeys(this.seperator)([layerKey]);
+    const layeredKeys = normalizeLayeredKeys(this.separator)([layerKey]);
     this.handlerWrappers.forEach((hw) => {
       const hwLayeredKeys = this.split(hw.key);
       const relation = getRelation(layeredKeys, hwLayeredKeys);
@@ -79,8 +79,8 @@ export default class EventListener {
       ) {
         const newValues = access(
           newRoot,
-          this.seperator,
-          this.keyValueSeperator,
+          this.separator,
+          this.keyValueSeparator,
           hwLayeredKeys
         );
         newValues.forEach((v) => hw.handler(v));

@@ -10,7 +10,7 @@ export default class StorageJsBase {
       ...DefaultConfig,
       ...config,
     };
-    const { join, split } = joinAndSplit(this.config.seperator);
+    const { join, split } = joinAndSplit(this.config.separator);
     this.join = join;
     this.split = split;
   }

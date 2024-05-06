@@ -1,27 +1,27 @@
 import { lastOne } from "./utils";
 
 const joinKey =
-  (seperator: string) =>
+  (separator: string) =>
   (...args: string[]): string =>
-    args.join(seperator);
+    args.join(separator);
 
 const splitKey =
-  (seperator: string) =>
+  (separator: string) =>
   (key: string): string[] =>
-    key.split(seperator);
+    key.split(separator);
 
 export type Join = ReturnType<typeof joinKey>;
 export type Split = ReturnType<typeof splitKey>;
 
-export const joinAndSplit = (seperator: string) => ({
-  join: joinKey(seperator),
-  split: splitKey(seperator),
+export const joinAndSplit = (separator: string) => ({
+  join: joinKey(separator),
+  split: splitKey(separator),
 });
 
 export const getLayerKeys =
-  (seperator: string) =>
+  (separator: string) =>
   (...args: string[]) => {
-    const { join, split } = joinAndSplit(seperator);
+    const { join, split } = joinAndSplit(separator);
     return split(join(...args)).reduce<string[]>(
       (a, c) => [...a, join(lastOne(a), c)],
       []
@@ -29,16 +29,16 @@ export const getLayerKeys =
   };
 
 export const normalizeLayeredKeys =
-  (seperator: string) => (layeredKeys: string[]) => {
-    const { join, split } = joinAndSplit(seperator);
+  (separator: string) => (layeredKeys: string[]) => {
+    const { join, split } = joinAndSplit(separator);
     return split(join(...layeredKeys));
   };
 
-export const isKeyValue = (target: string, keyValueSeperator: string) => {
-  return target.split(keyValueSeperator).length === 2;
+export const isKeyValue = (target: string, keyValueSeparator: string) => {
+  return target.split(keyValueSeparator).length === 2;
 };
-export const KeyValue = (target: string, keyValueSeperator: string) => {
-  const splited = target.split(keyValueSeperator);
+export const KeyValue = (target: string, keyValueSeparator: string) => {
+  const splited = target.split(keyValueSeparator);
   return { key: splited[0], value: splited[1] };
 };
 export type KeyValue = ReturnType<typeof KeyValue>;
@@ -62,6 +62,7 @@ export const getRelation = (
     if (normalizedTargetKeys[i] === undefined) return Relation.ancestor;
     if (normalizedBasedKeys[i] !== normalizedBasedKeys[i]) return Relation.none;
   }
-  if (normalizedBasedKeys.length === normalizedTargetKeys.length) return Relation.itself;
+  if (normalizedBasedKeys.length === normalizedTargetKeys.length)
+    return Relation.itself;
   return Relation.descendants;
 };

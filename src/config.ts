@@ -2,14 +2,14 @@ import Storage from "./storage";
 
 export type Config = {
   storage: Storage;
-  seperator: string;
-  keyValueSeperator: string;
+  separator: string;
+  keyValueSeparator: string;
   name: string;
 };
 
 export const DefaultConfig: Config = {
   storage: window.localStorage,
-  seperator: "-",
-  keyValueSeperator: ":",
+  separator: "-",
+  keyValueSeparator: ":",
   name: "",
 } as const;

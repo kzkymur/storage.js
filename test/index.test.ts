@@ -59,6 +59,14 @@ describe("test get method", () => {
       mock.items.filter((i) => i.owner === 1)
     );
   });
+
+  test("get by key value that value is string", () => {
+    const storage = getInitStorage();
+    toBeStr(
+      storage.get("items", "name:sord"),
+      mock.items.filter((i) => i.name === "sord")
+    );
+  });
 });
 
 describe("test set method", () => {
@@ -112,6 +120,16 @@ describe("test set method", () => {
     toBeStr(
       storage.get("items", "owner:3"),
       mock.items.filter((i) => i.owner === 1).map((i) => ({ ...i, owner: 3 }))
+    );
+  });
+
+  test("set by key value that value is string", () => {
+    const storage = getInitStorage();
+    storage.set("supersord", "items-name:sord-name");
+    toBeStr(storage.get("items-name:sord"), []);
+    toBeStr(
+      storage.get("items-name:supersord-id"),
+      mock.items.filter((i) => i.name === "sord").map((i) => i.id)
     );
   });
 });

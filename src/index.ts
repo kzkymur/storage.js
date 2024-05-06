@@ -9,16 +9,16 @@ export default class StorageJs extends Base {
   constructor(config?: Partial<Config>) {
     super(config);
     this.eventListener = new EventListener(
-      this.config.seperator,
-      this.config.keyValueSeperator
+      this.config.separator,
+      this.config.keyValueSeparator
     );
   }
 
   get<T extends Json = Json>(...layeredKeys: string[]) {
     return access(
       this.root,
-      this.config.seperator,
-      this.config.keyValueSeperator,
+      this.config.separator,
+      this.config.keyValueSeparator,
       layeredKeys
     ) as T;
   }
@@ -27,8 +27,8 @@ export default class StorageJs extends Base {
     this.root = update(
       value as Json,
       this.root,
-      this.config.seperator,
-      this.config.keyValueSeperator,
+      this.config.separator,
+      this.config.keyValueSeparator,
       layeredKeys
     );
     this.eventListener.exec(this.join(...layeredKeys), this.root);
@@ -37,8 +37,8 @@ export default class StorageJs extends Base {
   remove(...layeredKeys: string[]) {
     this.root = remove(
       this.root,
-      this.config.seperator,
-      this.config.keyValueSeperator,
+      this.config.separator,
+      this.config.keyValueSeparator,
       layeredKeys
     );
     this.eventListener.exec(this.join(...layeredKeys), this.root);
@@ -48,8 +48,8 @@ export default class StorageJs extends Base {
     this.root = push(
       value,
       this.root,
-      this.config.seperator,
-      this.config.keyValueSeperator,
+      this.config.separator,
+      this.config.keyValueSeparator,
       layeredKeys
     );
     this.eventListener.exec(this.join(...layeredKeys), this.root);
