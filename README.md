@@ -104,8 +104,9 @@ npm i @kzkymur/storage
 
 ## Future work
 
-- Type Gaured
+- Strong Type Gaured
 - Error Handle
+- React custom hooks
 - A way to get and set root value
 - Increasing the number of test cases and examples
 
