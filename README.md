@@ -67,7 +67,7 @@ storage.set("teacher", "users-job:student-job");
 console.log(storage.get("users-job:teacher-name")); // ['kzkymur', 'ringring']
 
 // push method
-storage.push({ id: 3, name: "ta1ch" }, "users", "0");
+storage.push({ id: 3, name: "ta1ch" }, "users");
 console.log(storage.get("users", "id:3", "name")); // ['ta1ch']
 
 // remove method

@@ -1,6 +1,6 @@
 {
   "name": "@kzkymur/storage",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "type": "esnext",
   "description": "",
   "main": "dist/index.js",
@@ -31,5 +31,12 @@
     "typescript": "^5.4.5",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "keywords": [
+    "storage",
+    "localStorage",
+    "sessionStorage",
+    "WebStorage",
+    "eventlistener"
+  ]
 }
