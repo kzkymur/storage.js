@@ -14,45 +14,53 @@ export default class StorageJs extends Base {
     );
   }
 
-  get<T extends Json = Json>(...layeredKeys: string[]) {
+  get<T extends Json = Json>(layeredKey: string, ...layeredKeys: string[]) {
     return access(
       this.root,
       this.config.separator,
       this.config.keyValueSeparator,
-      layeredKeys
-    ) as T;
+      [layeredKey, ...layeredKeys]
+    ) as T[];
   }
 
-  set<T extends Json = Json>(value: T, ...layeredKeys: string[]) {
+  set<T extends Json = Json>(
+    value: T,
+    layeredKey: string,
+    ...layeredKeys: string[]
+  ) {
     this.root = update(
       value as Json,
       this.root,
       this.config.separator,
       this.config.keyValueSeparator,
-      layeredKeys
+      [layeredKey, ...layeredKeys]
     );
-    this.eventListener.exec(this.join(...layeredKeys), this.root);
+    this.eventListener.exec(this.join(layeredKey, ...layeredKeys), this.root);
   }
 
-  remove(...layeredKeys: string[]) {
+  remove(layeredKey: string, ...layeredKeys: string[]) {
     this.root = remove(
       this.root,
       this.config.separator,
       this.config.keyValueSeparator,
-      layeredKeys
+      [layeredKey, ...layeredKeys]
     );
-    this.eventListener.exec(this.join(...layeredKeys), this.root);
+    this.eventListener.exec(this.join(layeredKey, ...layeredKeys), this.root);
   }
 
-  push<T extends Json = Json>(value: T, ...layeredKeys: string[]) {
+  push<T extends Json = Json>(
+    value: T,
+    layeredKey: string,
+    ...layeredKeys: string[]
+  ) {
     this.root = push(
       value,
       this.root,
       this.config.separator,
       this.config.keyValueSeparator,
-      layeredKeys
+      [layeredKey, ...layeredKeys]
     );
-    this.eventListener.exec(this.join(...layeredKeys), this.root);
+    this.eventListener.exec(this.join(layeredKey, ...layeredKeys), this.root);
   }
 
   clear() {
@@ -60,14 +68,39 @@ export default class StorageJs extends Base {
   }
 
   addEventListener<T extends Json = Json>(
-    key: string,
+    layeredKey: string,
     handler: Handler<T>,
     isAffectedBy?: Partial<IsAffectedBy>
   ) {
-    this.eventListener.add(key, handler, isAffectedBy);
+    this.eventListener.add(layeredKey, handler, isAffectedBy);
   }
 
-  removeEventListener<T extends Json = Json>(handler: Handler<T>) {
-    this.eventListener.remove(handler);
+  removeEventListener<T extends Json = Json>(
+    layeredKey: string | undefined,
+    handler: Handler<T> | undefined
+  ) {
+    this.eventListener.remove(layeredKey, handler);
   }
+
+  // utilities
+  concatLayeredKeys = (layeredKey: string, ...layeredKeys: string[]) =>
+    this.join(layeredKey, ...layeredKeys);
+
+  getAndSet = <T extends Json>(
+    layeredKey: string,
+    ...layeredKeys: string[]
+  ): [() => T[], (newValue: T) => void] => [
+    () => this.get<T>(layeredKey, ...layeredKeys),
+    (newValue: T) => this.set<T>(newValue, layeredKey, ...layeredKeys),
+  ];
+
+  registerEventListener = <T extends Json = Json>(
+    layeredKey: string,
+    handler: Handler<T>,
+    isAffectedBy?: Partial<IsAffectedBy>
+  ): (() => void) => {
+    this.addEventListener(layeredKey, handler, isAffectedBy);
+    const unregister = () => this.removeEventListener(layeredKey, handler);
+    return unregister;
+  };
 }

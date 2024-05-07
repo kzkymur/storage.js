@@ -109,8 +109,9 @@ describe("test set method", () => {
 
   test("set array in matrix", () => {
     const storage = getInitStorage();
-    storage.set([44, 55, 66], "matrix", "1");
-    toBeStr(storage.get("matrix", "1"), [[44, 55, 66]]);
+    const [get, set] = storage.getAndSet("matrix", "1");
+    set([44, 55, 66]);
+    toBeStr(get(), [[44, 55, 66]]);
   });
 
   test("set items in one time", () => {
@@ -190,8 +191,9 @@ describe("test push method", () => {
 describe("test clear method", () => {
   test("clear", () => {
     const storage = getInitStorage();
+    toBeStr(storage.get("users"), [mock.users]);
     storage.clear();
-    toBeStr(storage.get(), [{}]);
+    toBeStr(storage.get("users"), []);
   });
 });
 
@@ -217,9 +219,12 @@ describe("test event listener", () => {
     expect(handler).toHaveBeenCalledTimes(1);
 
     // remove test
-    storage.removeEventListener(handler);
+    storage.removeEventListener("users-id:1", handler);
     storage.set("kzkymur4", "users-id:1-name");
-    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledTimes(2);
+    storage.removeEventListener("users-id:1-name", handler);
+    storage.set("kzkymur5", "users-id:1-name");
+    expect(handler).toHaveBeenCalledTimes(2);
   });
 
   test("object", () => {
@@ -238,7 +243,7 @@ describe("test event listener", () => {
     expect(handler).toHaveBeenCalledTimes(1);
 
     // remove test
-    storage.removeEventListener(handler);
+    storage.removeEventListener(undefined, handler);
     storage.set(
       {
         id: 1,
@@ -253,8 +258,12 @@ describe("test event listener", () => {
     const storage = getInitStorage();
     const handler = jest.fn();
 
-    storage.addEventListener("users-id:1-name", handler, { parent: true });
-    storage.set("kzkymur2", "users-id:1-name");
+    const unregister = storage.registerEventListener(
+      "users-id:1-name",
+      handler,
+      { parent: true }
+    );
+    storage.set("kzkymur2", storage.concatLayeredKeys("users", "id:1", "name"));
     expect(handler).toHaveBeenCalledWith("kzkymur2");
     expect(handler).toHaveBeenCalledTimes(1);
 
@@ -266,6 +275,16 @@ describe("test event listener", () => {
       "users-id:1"
     );
     expect(handler).toHaveBeenLastCalledWith("kzkymur3");
+    expect(handler).toHaveBeenCalledTimes(2);
+
+    unregister();
+    storage.set(
+      {
+        id: 1,
+        name: "kzkymur4",
+      },
+      "users-id:1"
+    );
     expect(handler).toHaveBeenCalledTimes(2);
   });
 

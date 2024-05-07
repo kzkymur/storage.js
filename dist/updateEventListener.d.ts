@@ -11,6 +11,6 @@ export default class EventListener {
     private split;
     constructor(separator: string, keyValueSeparator: string);
     add: (key: string, handler: Handler, isAffectedBy?: Partial<IsAffectedBy>) => void;
-    remove: (handler: Handler) => void;
+    remove: (layeredKey: string | undefined, handler: Handler | undefined) => void;
     exec: (layerKey: string, newRoot: JsonObject) => void;
 }

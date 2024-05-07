@@ -61,9 +61,13 @@ export default class EventListener {
     });
   };
 
-  remove = (handler: Handler) => {
-    this.handlerWrappers = this.handlerWrappers.filter(
-      (hw) => hw.handler !== handler
+  remove = (layeredKey: string | undefined, handler: Handler | undefined) => {
+    const params = { key: layeredKey, handler };
+    const validParams = Object.entries(params)
+      .filter((v) => v[1])
+      .map((v) => v[0]) as Array<keyof typeof params>;
+    this.handlerWrappers = this.handlerWrappers.filter((hw) =>
+      validParams.reduce<boolean>((a, c) => a || hw[c] !== params[c], false)
     );
   };
 

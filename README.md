@@ -47,14 +47,14 @@ const storage = new StorageJs({
   name: "test",
 
   // These are optional. A comlex value will be better if you set.
-  Separotor: "-",
+  separotor: "-",
   keyValueSeparator: ":",
 });
 
 // get method
 const [name] = storage.get("users", "id:1", "name");
 const [nameByJoinedStringKey] = storage.get("users-id:1-name");
-const [nameByIndex] = storage.get("users-id:1-name");
+const [nameByIndex] = storage.get("users-0-name");
 console.log(name); // "kzkymur".
 console.log(name === nameByJoinedStringKey); // true.
 console.log(name === nameByIndex); // true.
@@ -66,6 +66,10 @@ console.log(storage.get("users", "id:1", "name")[0]); // "kzkymur2"
 storage.set("teacher", "users-job:student-job");
 console.log(storage.get("users-job:teacher-name")); // ['kzkymur', 'ringring']
 
+// push method
+storage.push({ id: 3, name: "ta1ch" }, "users", "0");
+console.log(storage.get("users", "id:3", "name")); // ['ta1ch']
+
 // remove method
 storage.remove("users", "0");
 console.log(storage.get("users", "id:1")); // []
@@ -76,8 +80,18 @@ storage.addEventListener("users-id:1", handler, {
   parent: false,
   children: true,
 });
-storage.set("kzkymur2", "users", "id:1", "name"); // console.log({ id: 1, name: "kzkymur2" }); is fired
+storage.set("kzkymur2", storage.concatLayeredKeys("users", "id:1", "name")); // console.log({ id: 1, name: "kzkymur2" }); is fired because children flag true
 storage.removeEventListener(handler);
+
+const unregister = storage.registerEventListener("users-id:2-name", handler, {
+  parent: true,
+  children: false,
+});
+storage.set(
+  { id: 2, name: "ringring2" },
+  storage.concatLayeredKeys("users", "id:2")
+); // console.log("ringring2"); is fired because parent flag true
+unregister();
 ```
 
 more information is written in `test/index.test.ts` so plz refer to it.
@@ -91,10 +105,8 @@ npm i @kzkymur/storage
 ## Future work
 
 - Type Gaured
-- A way to set root value
-- Increasing the number of test case and examples
-
-## Author's comment
+- Error Handle
+- A way to get and set root value
+- Increasing the number of test cases and examples
 
 I'll be happy if you contribute this!
-
