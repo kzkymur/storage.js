@@ -4,7 +4,7 @@ import { Handler, IsAffectedBy } from "./updateEventListener";
 import Base from "./base";
 export default class StorageJs extends Base {
     private eventListener;
-    constructor(config?: Partial<Config>);
+    constructor(config: Config);
     get<T extends Json = Json>(layeredKey: string, ...layeredKeys: string[]): T[];
     set<T extends Json = Json>(value: T, layeredKey: string, ...layeredKeys: string[]): void;
     remove(layeredKey: string, ...layeredKeys: string[]): void;

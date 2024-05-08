@@ -1,8 +1,8 @@
 import Storage from "./storage";
 export type Config = {
-    storage: Storage;
-    separator: string;
-    keyValueSeparator: string;
     name: string;
+    storage?: Storage;
+    separator?: string;
+    keyValueSeparator?: string;
 };
-export declare const DefaultConfig: Config;
+export declare const DefaultConfig: Required<Config>;

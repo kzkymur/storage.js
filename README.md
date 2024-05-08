@@ -107,7 +107,7 @@ npm i @kzkymur/storage
 - Strong Type Gaured
 - Error Handle
 - React custom hooks
-- A way to get and set root value
-- Increasing the number of test cases and examples
+- More Test cases and Examples
+- Function to Get and Set root JSON
 
 I'll be happy if you contribute this!

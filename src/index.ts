@@ -6,7 +6,7 @@ import Base from "./base";
 
 export default class StorageJs extends Base {
   private eventListener: EventListener;
-  constructor(config?: Partial<Config>) {
+  constructor(config: Config) {
     super(config);
     this.eventListener = new EventListener(
       this.config.separator,
