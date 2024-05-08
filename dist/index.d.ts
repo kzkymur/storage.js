@@ -1,5 +1,6 @@
 import { Config } from "./config";
 import Json from "./json";
+export { Json };
 import { Handler, IsAffectedBy } from "./updateEventListener";
 import Base from "./base";
 export default class StorageJs extends Base {

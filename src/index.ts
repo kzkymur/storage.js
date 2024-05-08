@@ -1,6 +1,7 @@
 import { Config } from "./config";
 import { access, push, remove, update } from "./operate";
 import Json from "./json";
+export { Json };
 import EventListener, { Handler, IsAffectedBy } from "./updateEventListener";
 import Base from "./base";
 
