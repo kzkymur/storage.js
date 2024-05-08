@@ -35,6 +35,12 @@ and '-' Separotor, ':' KeyValueSeparotor.
 
 - if you wanna get a user's name id = 1, Layered-String-Key will be `users-id:1-name`
 
+## Install
+
+```sh
+npm i @kzkymur/storage
+```
+
 ## How to use
 
 Assume that your localStorage is registered with the previous example JSON.
@@ -96,18 +102,21 @@ unregister();
 
 more information is written in `test/index.test.ts` so plz refer to it.
 
-## Install
-
-```sh
-npm i @kzkymur/storage
-```
-
 ## Future work
 
 - Strong Type Gaured
 - Error Handle
 - React custom hooks
 - More Test cases and Examples
+- Optimization for Event Listener
 - Function to Get and Set root JSON
 
 I'll be happy if you contribute this!
+
+## Author
+
+[kzkymur][https://twitter.com/kzkymur]
+
+## LICENSE
+
+MIT
