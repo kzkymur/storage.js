@@ -115,7 +115,7 @@ I'll be happy if you contribute this!
 
 ## Author
 
-[kzkymur][https://twitter.com/kzkymur]
+[kzkymur](https://twitter.com/kzkymur)
 
 ## LICENSE
 
