@@ -1,4 +1,5 @@
 import { Config, DefaultConfig } from "./config";
+import { JsonObject } from "./json";
 import { Join, Split, joinAndSplit } from "./keyAccess";
 
 export default class StorageJsBase {
@@ -24,7 +25,7 @@ export default class StorageJsBase {
     return JSON.parse(value);
   }
 
-  protected set root(value: any) {
+  protected set root(value: JsonObject | undefined) {
     this.config.storage.setItem(this.config.name, JSON.stringify(value));
   }
 }
