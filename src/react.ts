@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import Json from "./json";
-import StorageJs from ".";
+import StorageJs from "./index";
 
 const useCounter = (): [number, () => void] => {
   const [count, setCount] = useState(0);

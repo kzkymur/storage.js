@@ -109,8 +109,10 @@ more information is written in `test/index.test.ts` so plz refer to it.
 ```js
 import StorageJs from "@kzkymur/storage";
 import { useStorageUnique } from "@kzkymur/storage/react";
+// or
+// import { useStorageUnique } from "@kzkymur/storage/dist/react";
 
-// Recommend to be out of Component
+// We recommend to be outside of Component
 const storage = new StorageJs({
   storage: winodw.localStorage || window.sessionStorage,
   name: "test",
