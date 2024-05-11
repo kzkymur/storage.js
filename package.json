@@ -1,17 +1,17 @@
 {
   "name": "@kzkymur/storage",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "type": "esnext",
   "description": "The Super lightweight library to handle WebStorage more easily.",
   "main": "dist/index.js",
   "exports": {
     ".": {
-      "types": "dist/index.d.ts",
-      "default": "dist/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./react": {
-      "types": "dist/react.d.ts",
-      "default": "dist/react.js"
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
     }
   },
   "scripts": {
