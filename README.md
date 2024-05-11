@@ -45,6 +45,8 @@ npm i @kzkymur/storage
 
 Assume that your localStorage is registered with the previous example JSON.
 
+### Vanilla Js
+
 ```js
 import StorageJs from "@kzkymur/storage";
 
@@ -102,12 +104,39 @@ unregister();
 
 more information is written in `test/index.test.ts` so plz refer to it.
 
+### React Custom Hooks
+
+```js
+import StorageJs from "@kzkymur/storage";
+import { useStorageUnique } from "@kzkymur/storage/react";
+
+// Recommend to be out of Component
+const storage = new StorageJs({
+  storage: winodw.localStorage || window.sessionStorage,
+  name: "test",
+});
+
+const MyComponent = (props) => {
+  const [user, setUser] = useStorageUnique(storage, `users-id:${props.id}`);
+  const updateUserName = (name: string) => {
+    setUser({ ...user, name });
+  };
+
+  return (
+    <div>
+      <p> id : ${user.id} </p>
+      <p> name: ${user.name} </p>
+    </div>
+  );
+};
+```
+
 ## Future work
 
 - Strong Type Gaured
 - Error Handle
-- React custom hooks
 - More Test cases and Examples
+- More React custom hooks
 - Optimization for Event Listener
 - Function to Get and Set root JSON
 
