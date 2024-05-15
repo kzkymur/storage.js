@@ -5,6 +5,9 @@ module.exports = {
     index: "./src/index.ts",
     react: "./src/react.ts",
   },
+  externals: {
+    react: "react",
+  },
   module: {
     rules: [
       {
