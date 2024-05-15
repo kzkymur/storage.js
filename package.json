@@ -1,6 +1,6 @@
 {
   "name": "@kzkymur/storage",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "module": "./dist",
   "description": "The Super lightweight library to handle WebStorage more easily.",
   "exports": {

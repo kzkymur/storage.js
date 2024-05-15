@@ -4,7 +4,7 @@ import StorageJs from "./index";
 
 const useCounter = (): [number, () => void] => {
   const [count, setCount] = useState(0);
-  const increment = useCallback(() => setCount(count + 1), [count]);
+  const increment = useCallback(() => setCount((count) => count + 1), []);
   return [count, increment];
 };
 
@@ -14,7 +14,7 @@ export const useStorage = <T extends Json>(
   defaultValue?: T
 ): [T[], (v: T) => void] => {
   const [count, increment] = useCounter();
-  const [get, set] = useMemo(() => storage.getAndSet<T>(key), [key]);
+  const [get, set] = useMemo(() => storage.getAndSet<T>(key), [storage, key]);
 
   useEffect(() => {
     if (get().length === 0 && defaultValue !== undefined) set(defaultValue);
@@ -23,7 +23,7 @@ export const useStorage = <T extends Json>(
   useEffect(() => {
     const unregister = storage.registerEventListener(key, increment);
     return unregister;
-  }, [increment, key]);
+  }, [storage, increment, key]);
 
   const value = useMemo<T[]>(get, [count]);
   return [value, set];
